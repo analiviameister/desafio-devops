@@ -1,0 +1,28 @@
+---
+- name: Configurar Host - Docker
+  hosts: all
+  remote_user: root
+  tags: configure
+  roles:
+    - role: ansible-role-configure-hosts-docker
+
+- name: Install K8s Packages
+  hosts: all
+  remote_user: root
+  tags: packages
+  roles:
+    - role: kubernetes-common-packages
+
+- name: Configure Master Node
+  hosts: node_master_01
+  remote_user: root
+  tags: master
+  roles:
+    - role: kubernetes-master
+
+- name: Configure Worker Node
+  hosts: node_worker_01
+  remote_user: root
+  tags: worker
+  roles:
+    - role: kubernetes-worker

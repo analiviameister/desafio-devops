@@ -1,0 +1,49 @@
+---
+
+- name: Atualizar arquivo do grub para configuração do systemd
+  shell: sed -i 's/GRUB_CMDLINE_LINUX\=\"\"$/GRUB_CMDLINE_LINUX\=\"cgroup_enable\=memory swapaccount\=1 console\=ttyS0\,19200n8 net\.ifnames=0\"/g' /etc/default/grub
+
+- name: Atualizar grub
+  shell: update-grub
+
+- name: Reiniciar máquinas
+  reboot:
+    search_paths:
+      - "/lib/molly-guard"
+      - "/sbin"
+      - "/usr/sbin"
+
+- name: Check se nó ja tem arquivos de kubernetes
+  stat:
+    path: /etc/kubernetes/admin.conf
+  register: kubernetes_init_stat
+  changed_when: false
+
+- name: Iniciar single master
+  command: kubeadm init --pod-network-cidr=10.244.0.0/16
+  register: kubeadm_output
+  when:
+    - inventory_hostname in groups.master[0]
+    - not kubernetes_init_stat.stat.exists
+
+- name: Criar diretorio de configuracao
+  file:
+    path: ~/.kube
+    state: directory
+
+- name: Copiar configuracoes para .kube
+  copy:
+      src: /etc/kubernetes/admin.conf
+      dest: ~/.kube/config   
+
+- name: Deploy Calico NTW
+  command: kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+
+- name: Configurar nó master para ciclo de agendamento
+  command: kubectl taint nodes --all node-role.kubernetes.io/master-
+
+- name: Registrar comando de join no primeiro master
+  command: kubeadm token create --print-join-command
+  register: join_command
+  when:
+    - inventory_hostname in groups.master[0]

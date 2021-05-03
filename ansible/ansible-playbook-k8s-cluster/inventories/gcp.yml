@@ -1,0 +1,22 @@
+---
+all:
+  vars:
+    ambiente: gcp
+    vm_ip_node_master_01: "{{ lookup('file', '../../terraform/outputs/public_ip_vm_instance_kubernetes-master-node-01.txt') }}"
+    vm_ip_node_worker_01: "{{ lookup('file', '../../terraform/outputs/public_ip_vm_instance_kubernetes-worker-node-01.txt') }}"
+    kube_version: 1.17.14
+
+  hosts:
+    node_master_01:
+      ansible_host: "{{ vm_ip_node_master_01 }}"
+    node_worker_01:
+      ansible_host: "{{ vm_ip_node_worker_01 }}"
+    
+  
+  children:
+      master:
+        hosts:
+          node_master_01:
+      worker:
+        hosts:
+          node_worker_01:

@@ -1,0 +1,29 @@
+---
+- name: Adicionar chave GPG do repositório do kubernetes da Google
+  apt_key:
+    url: "https://packages.cloud.google.com/apt/doc/apt-key.gpg"
+    state: present
+
+- name: Adicionar repositório APT de kubernetes
+  apt_repository:
+    repo: "deb http://apt.kubernetes.io/ kubernetes-xenial main"
+    state: present
+
+- name: Instalar pacotes do kubernetes
+  apt:
+    name: "{{ item }}"
+    state: present
+    force: True
+  with_items:
+    - "kubeadm={{ kube_version }}-00"
+    - "kubelet={{ kube_version }}-00"
+    - "kubectl={{ kube_version }}-00"
+
+- name: Marcar pacotes com hold
+  dpkg_selections:
+    name: "{{ item }}"
+    selection: hold
+  with_items:
+    - kubeadm
+    - kubelet
+    - kubectl
