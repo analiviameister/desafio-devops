@@ -16,7 +16,6 @@
 - name: Install Jekins
   apt: update_cache=yes name=jenkins state=present
 
-
 - name: Enable service jenkins
   ansible.builtin.service:
     name: jenkins
@@ -29,9 +28,3 @@
 - name: Configure Initial Password
   command: cat /var/lib/jenkins/secrets/initialAdminPassword
   register: jenkins_password
-
-
-
-
-
-

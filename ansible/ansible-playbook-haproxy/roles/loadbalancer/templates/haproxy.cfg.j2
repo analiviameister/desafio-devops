@@ -30,6 +30,11 @@ listen Statistics
     stats uri /stats
     stats refresh 5s
 
+listen registry-docker
+    bind *:5001
+    server WS01 10.15.1.7:5001 check
+
+
 frontend main
   bind 0.0.0.0:80
 

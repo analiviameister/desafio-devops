@@ -5,3 +5,10 @@
   tags: master
   roles:
     - role: jenkins
+
+- name: Configurar Host - Docker
+  hosts: jenkins-master
+  remote_user: root
+  tags: configure
+  roles:
+    - role: ansible-role-configure-hosts-docker

@@ -1,0 +1,16 @@
+---
+
+- name: Deploy Registry Container
+  docker_container:
+    image: registry:2
+    name: registry
+    restart_policy: always
+    state: started
+    recreate: yes
+    ports:
+      - 5001:5000
+    volumes:
+      - /opt/registry/data:/var/lib/registry
+    env:
+      TZ: America/Fortaleza
+

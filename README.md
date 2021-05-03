@@ -13,3 +13,7 @@ URLS:
 
 [Zabbix](http://zabbix.desafio)
 
+[GitLab](http://gitlab.desafio)
+
+[Kubernetes_Dashboard](http://dash.k8s.desafio)
+

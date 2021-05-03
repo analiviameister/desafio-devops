@@ -1,0 +1,5 @@
+- name: ansible-role-configure-hosts-docker
+  src: https://github.com/analiviameister/ansible-role-configure-hosts-docker.git
+  scm: git
+  accept_hostkey: yes
+  version: origin/master

@@ -1,0 +1,15 @@
+---
+all:
+  vars:
+    ambiente: gcp
+    vm_ip: "{{ lookup('file', '../../terraform/outputs/public_ip_vm_instance_registry-01.txt') }}"
+
+  hosts:
+    registry:
+      ansible_host: "{{ vm_ip }}"
+  
+  children:
+      registry-docker:
+        hosts:
+          registry:
+          

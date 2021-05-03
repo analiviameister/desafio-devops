@@ -23,7 +23,8 @@ resource "google_compute_firewall" "allow_internal" {
 
   source_ranges = [ 
     "${var.ue1_private_subnet}",
-    "${var.ue1_public_subnet}"
+    "${var.ue1_public_subnet}",
+    "10.15.1.0/32"
   ]
 }
 
@@ -49,4 +50,3 @@ resource "google_compute_firewall" "allow-ssh" {
   target_tags = ["ssh"]
 
 }
-
