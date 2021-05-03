@@ -1,15 +1,10 @@
 node {
 	
 	stage ("SCM"){
-		git(branch: "", credentialsId: 'JenkinsUserInGitLab', url: "")
-		git(branch: 'master', credentialsId: 'JenkinsUserInGitLab', url: '')
-	}
-
-    stage ("SCM"){
-		git(branch: "", credentialsId: '', url: "")
-		dir("configs-app") {
-			git(branch: 'master', credentialsId: '', url: '')
-		}
+		git(branch: 'master', credentialsId: 'JenkinsGithubIntegration', url: 'git@github.com:analiviameister/desafio-devops-app.git')
+			dir ("configs-app"){
+				git(branch: 'master', credentialsId: 'JenkinsGithubIntegration', url: 'git@github.com:analiviameister/desafio-devops-app-configs.git')	
+			}
 	}
 
     stage('App Test'){
@@ -17,7 +12,6 @@ node {
          env.NODE_ENV = "test"
 
          print "Environment will be : ${env.NODE_ENV}"
-
          sh 'node -v'
          sh 'npm prune'
          sh 'npm install'
@@ -25,19 +19,19 @@ node {
 
     }
 
-    
     stage ("Docker Build"){
-		
-		def dockerRegistry = 'registry.desafio:5001'
-		def dockerTool = tool name: 'docker'
-			
 		configFileProvider([ configFile(fileId: 'DockerfileNodeJs', targetLocation: 'Dockerfile') ]) {
             def dockerRegistry  = "registry.desafio:5001"
-            def imageDocker     = "${dockerRegistry}/${binaryApp}-${binaryType}-${binaryEnv}"
-            def generatedImage  = docker.build("${imageDocker)}:${env.BUILD_ID}")
-             
-                generatedImage.push()
+            def imageDocker  = "nodejs-app"
+            def generatedImage  = docker.build('registry.desafio:5001/nodejs-app')
+
+			// docker.withRegistry('${dockerRegistry}') {
+        		
+				generatedImage.push()
 				generatedImage.push("latest")
+    		// }
+             
+                
         }
 	}
 	
@@ -67,4 +61,3 @@ node {
 	}
 	
 }
-

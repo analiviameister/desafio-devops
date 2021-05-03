@@ -28,19 +28,19 @@
 
 - name: Criar diretorio de configuracao
   file:
-    path: ~/.kube
+    path: $HOME/.kube
     state: directory
 
-- name: Copiar configuracoes para .kube
-  copy:
-      src: /etc/kubernetes/admin.conf
-      dest: ~/.kube/config   
+- name: Copiar configuracoes para kube
+  shell: cp -i /etc/kubernetes/admin.conf $HOME/.kube/config  && chown $(id -u):$(id -g) $HOME/.kube/config
+  args:
+    executable: /bin/bash
 
 - name: Deploy Calico NTW
   command: kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
 
-- name: Configurar nó master para ciclo de agendamento
-  command: kubectl taint nodes --all node-role.kubernetes.io/master-
+# - name: Configurar nó master para ciclo de agendamento
+#   command: kubectl taint nodes --all node-role.kubernetes.io/master-
 
 - name: Registrar comando de join no primeiro master
   command: kubeadm token create --print-join-command

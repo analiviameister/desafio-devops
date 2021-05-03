@@ -1,5 +1,5 @@
 #!/bin/bash
 
-LIST_HOST="104.196.164.201 jenkins.desafio grafana.desafio zabbix.desafio"
+LIST_HOST="104.196.164.201 jenkins.desafio grafana.desafio zabbix.desafio registry.desafio"
 
 echo $LIST_HOST >> /etc/hosts

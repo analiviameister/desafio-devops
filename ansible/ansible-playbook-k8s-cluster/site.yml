@@ -26,3 +26,10 @@
   tags: worker
   roles:
     - role: kubernetes-worker
+
+- name: Configure Dashboard
+  hosts: node_master_01
+  remote_user: root
+  tags: dashboard
+  roles:
+    - role: kubernetes-dashboard

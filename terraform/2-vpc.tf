@@ -50,3 +50,16 @@ resource "google_compute_firewall" "allow-ssh" {
   target_tags = ["ssh"]
 
 }
+
+resource "google_compute_firewall" "allow-kubernetes-dashboard" {
+  name    = "${var.company_name}-fw-allow-kubernetes-dashboard"
+  network = "${google_compute_network.vpc.name}"
+  
+  allow {
+    protocol = "tcp"
+    ports    = ["31000"]
+  }
+
+  target_tags = ["k8s"]
+
+}

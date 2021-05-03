@@ -1,0 +1,26 @@
+---
+- name: Apply Dashboard Deployment
+  command: kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml
+
+- name: Criar diretorio de Deployments
+  file:
+    path: /opt/deployments
+    state: directory
+
+- name: Copy template User Admin
+  template:
+    src: admin-dashboard.yml.j2
+    dest: /opt/deployments/admin-dashboard.yml
+    owner: root
+    group: root
+
+- name: Create User for Access Dashboard
+  command: kubectl apply -f /opt/deployments/admin-dashboard.yml
+
+- name: Register Secret Token
+  shell: kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep dash-admin | awk '{print $1}')
+  register: token_k8s
+
+- name: Get token
+  debug:
+    var: token_k8s

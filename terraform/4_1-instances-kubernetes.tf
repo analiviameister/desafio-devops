@@ -8,7 +8,7 @@ resource "google_compute_instance" "vm_instance_kubernetes-master-node-01" {
   name         = "kubernetes-master-node-01"
   machine_type = var.machine_types_kubernetes.master
   zone          = "${var.zone_name}"
-  tags = [ "ssh" ]
+  tags = [ "ssh", "k8s" ]
 
   boot_disk {
     initialize_params {
@@ -41,7 +41,7 @@ resource "google_compute_instance" "vm_instance_kubernetes-worker-node-01" {
   name         = "kubernetes-worker-node-01"
   machine_type = var.machine_types_kubernetes.worker
   zone          = "${var.zone_name}"
-  tags = [ "ssh" ]
+  tags = [ "ssh", "k8s" ]
 
   boot_disk {
     initialize_params {
