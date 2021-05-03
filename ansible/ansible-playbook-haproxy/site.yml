@@ -1,0 +1,14 @@
+- name: Configurar hosts
+  hosts: haproxy
+  remote_user: root
+  tags: configure
+  roles:
+    - role: ansible-role-configure-hosts-docker
+
+
+- name: Configurar HAProxy
+  hosts: haproxy
+  remote_user: root
+  tags: haproxy
+  roles:
+    - role: loadbalancer

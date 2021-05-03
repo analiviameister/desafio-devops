@@ -1,0 +1,17 @@
+---
+all:
+  vars:
+    ambiente: gcp
+    vm_ip: "{{ lookup('file', '../../terraform/outputs/public_ip_vm_instance_monitoring-01.txt') }}"
+
+  hosts:
+    grafana:
+      ansible_host: "{{ vm_ip }}"
+    zabbix:
+      ansible_host:  "{{ vm_ip }}"
+  
+  children:
+      monitoring:
+        hosts:
+          grafana:
+          zabbix:

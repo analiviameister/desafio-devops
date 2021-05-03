@@ -1,0 +1,6 @@
+---
+- name: Restartar haproxy
+  service:
+    name: haproxy
+    enabled: true
+    state: restarted

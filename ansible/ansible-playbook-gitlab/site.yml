@@ -1,0 +1,14 @@
+- name: Configurar hosts
+  hosts: elk
+  remote_user: root
+  tags: configure
+  roles:
+    - role: ansible-role-configure-hosts-docker
+
+
+- name: Configurar ELASTIC LOGSTASH KIBANA
+  hosts: elk
+  remote_user: root
+  tags: elk
+  roles:
+    - role: elk

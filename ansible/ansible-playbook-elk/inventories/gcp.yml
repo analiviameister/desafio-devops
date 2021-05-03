@@ -1,0 +1,14 @@
+---
+all:
+  vars:
+    ambiente: gcp
+    vm_ip: "{{ lookup('file', '/home/almeister/Projetos/Pessoais/github/desafio-devops/terraform/outputs/public_ip_vm_instance_monitoring-02.txt') }}"
+
+  hosts:
+    elk:
+      ansible_host: "{{ vm_ip }}"
+  
+  children:
+      elk-stask:
+        hosts:
+          elk:

@@ -1,0 +1,42 @@
+global
+  log /dev/log local0
+  log /dev/log    local1 notice
+  maxconn 20000
+  user haproxy
+  group haproxy
+  chroot /var/lib/haproxy
+  stats socket /var/run/haproxy/info.sock  mode 666 level user
+  stats socket /run/haproxy/admin.sock mode 660 level admin
+  stats timeout 30s
+  daemon
+
+defaults
+  mode http
+  log global
+  retries 2
+  timeout connect 5000ms
+  timeout server 5000ms
+  timeout client 5000ms
+
+listen Statistics
+    bind *:81
+    mode http
+    option httpclose
+    stats enable
+    stats auth admin:haproxy
+    stats show-legends
+    stats hide-version
+    stats show-desc LB {{ ambiente }} desafio-devops
+    stats uri /stats
+    stats refresh 5s
+
+frontend main
+  bind 0.0.0.0:80
+
+    # grafana
+    use_backend backend_grafana if { hdr_beg(host)   -i  grafana.desafio }
+
+backend backend_grafana
+    balance leastconn
+    server WS01 10.15.1.4:3000 check
+

@@ -1,0 +1,14 @@
+---
+all:
+  vars:
+    ambiente: gcp
+    vm_ip: "{{ lookup('file', '../../terraform/outputs/public_ip_vm_instance_balancer-01.txt') }}"
+
+  hosts:
+    haproxy:
+      ansible_host: "{{ vm_ip }}"
+  
+  children:
+      balancer:
+        hosts:
+          haproxy:

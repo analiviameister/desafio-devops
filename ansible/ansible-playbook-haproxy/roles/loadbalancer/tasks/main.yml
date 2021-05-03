@@ -1,0 +1,22 @@
+- name: Install HAProxy Service
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - haproxy
+    - libipset-dev
+    - net-tools
+    - dnsutils
+
+- name: Configure Template haproxy.cfg
+  template:
+    src: haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+    owner: root
+    group: root
+
+- name: Check haproxy
+  command: haproxy -c -f /etc/haproxy/haproxy.cfg
+  register: check_result
+  notify:
+    - Restartar haproxy

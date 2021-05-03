@@ -1,0 +1,96 @@
+---
+
+- name: Deploy Elasticsearch Container
+  docker_container:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2
+    name: elasticsearch
+    restart_policy: always
+    state: started
+    recreate: yes
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - /opt/elasticsearch/settings:/usr/share/elasticsearch/config
+      - /opt/elasticsearch/esdata:/usr/share/elasticsearch/data
+      - /opt/elasticsearch/logs:/var/log/elasticsearch
+    env:
+      ELASTICSEARCH_USERNAME: elastic
+      ELASTICSEARCH_PASSWORD: changeme
+      #discovery.type: single-node
+      #http.host: 0.0.0.0
+      #transport.host: 0.0.0.0
+
+- name: Configure Template Elasticsearch YML
+  template:
+    src: elasticsearch.yml.j2
+    dest: /opt/elasticsearch/settings/elasticsearch.yml
+    owner: root
+    group: root
+
+- name: Configure Template JVM OPTIONS YML
+  template:
+    src: jvm.options.j2
+    dest: /opt/elasticsearch/settings/jvm.options
+    owner: root
+    group: root
+
+
+- name: Deploy Kibana Container
+  docker_container:
+    image: docker.elastic.co/kibana/kibana-oss:7.10.2
+    name: kibana
+    restart_policy: always
+    #recreate: yes
+    state: started
+    ports:
+      - "5601:5601"
+    volumes:
+      - /opt/kibana/settings:/usr/share/kibana/config
+    env:
+      SERVER_NAME: kibana
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      ELASTICSEARCH_USERNAME: elastic
+      ELASTICSEARCH_PASSWORD: changeme
+
+- name: Configure Template Kibana YML
+  template:
+    src: kibana.yml.j2
+    dest: /opt/kibana/settings/kibana.yml
+    owner: root
+    group: root
+
+- name: Deploy Logstash Container
+  docker_container:
+    image: docker.elastic.co/logstash/logstash-oss:7.10.2
+    name: logstash
+    restart_policy: always
+    recreate: yes
+    state: started
+    ports:
+      - "5044:5044"
+      - "5000:5000"
+      - "12201:12201"
+    volumes:
+      - /opt/logstash/config:/usr/share/logstash/config
+      - /opt/logstash/config-dir:/config-dir/
+    command: logstash -f /config-dir/logstash.conf
+    env:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      ELASTICSEARCH_USERNAME: elastic
+      ELASTICSEARCH_PASSWORD: changeme
+
+- name: Configure Template Logstash YML
+  template:
+    src: logstash.yml.j2
+    dest: /opt/logstash/config/logstash.yml
+    owner: root
+    group: root
+
+- name: Configure Template Logstash CONF
+  template:
+    src: logstash.conf.j2
+    dest: /opt/logstash/config-dir/logstash.conf
+    owner: root
+    group: root
+

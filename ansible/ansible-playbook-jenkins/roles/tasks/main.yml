@@ -1,0 +1,30 @@
+---
+- name: Install JDK-11
+  apt: update_cache=yes name=default-jdk state=present
+
+ - name: Add Jenkins GPG apt Key
+   apt_key: 
+    url: https://pkg.jenkins.io/debian/jenkins.io.key
+    state: present
+
+- name: Add Jenkins Repository
+  apt_repository:
+    repo: deb http://pkg.jenkins.io/debian-stable binary
+    state: present
+    filename: jenkins
+
+- name: Install JDK-11
+  apt: update_cache=yes name=default-jdk state=present
+
+
+- name: Enable service jenkins
+  ansible.builtin.service:
+    name: jenkins
+    enabled: yes
+
+- name: Restart Jenkins
+  notify:
+    - Restart Jenkins
+#sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+

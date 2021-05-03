@@ -1,0 +1,15 @@
+---
+all:
+  vars:
+    ambiente: gcp
+    vm_ip: "{{ lookup('file', '../../terraform/outputs/public_ip_vm_instance_cicd-01.txt') }}"
+
+  hosts:
+    jenkins-master:
+      ansible_host: "{{ vm_ip }}"
+
+  
+  children:
+      jenkins:
+        hosts:
+          jenkins-master:

@@ -1,5 +1,15 @@
+terraform {
+
+  required_version = ">= 0.15.1"
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
 provider "google" {
-  project = "{{YOUR GCP PROJECT}}"
-  region  = "us-east-1"
-  zone    = "us-central1-c"
+  credentials = file("credentials/desafio-project-8274ac718369.json")
+  project = var.project_name
+  region = var.region_name
 }

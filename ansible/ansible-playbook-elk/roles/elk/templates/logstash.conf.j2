@@ -1,0 +1,60 @@
+input{
+    tcp {
+     port => 5000
+      }
+      gelf {
+        port => 12201
+      }
+      beats {
+        port => 5044
+      }
+}
+
+    filter {
+      geoip { source => "clientip" }
+      json { source => "message" }
+    }
+
+filter {
+  if [@metadata][beat] == "apm" {
+    if [service][name] {
+      mutate {
+        add_field => { "[@metadata][target_index]" => "apm-%{[service][name]}-%{[@metadata][version]}-%{+YYYY.MM.dd}" }
+        add_field => { "type" => "apm-%{[service][name]}"}
+      }
+    } else {
+      mutate {
+        add_field => { "[@metadata][target_index]" => "apm-%{[@metadata][version]}-%{+YYYY.MM.dd}" }
+        add_field => { "type" => "apm"}
+      }
+    }
+  } else if [@metadata][beat] == "filebeat" {
+    mutate {
+      add_field => { "[@metadata][target_index]" => "filebeat-%{[@metadata][version}-%{+YYYY.MM.dd}" }
+      add_field => { "type" => "beat"}
+    }
+  } else if [serviceName] {
+    mutate {
+      add_field => { "[@metadata][target_index]" => "%{[serviceName]}-%{+YYYY.MM.dd}" }
+      add_field => { "type" => "service" }
+    }
+  } else {
+    mutate {
+      add_field => { "[@metadata][target_index]" => "misc-%{+YYYY.MM.dd}" }
+      add_field => { "type" => "misc"}
+      add_field => { "metadata" => "%{[@metadata]}" }
+    }
+  }
+}
+
+output {
+  stdout { codec => rubydebug }
+  elasticsearch {
+	hosts => "elasticsearch"
+        user => "elastic"
+        password => "changeme"    
+	index => "%{[@metadata][target_index]}"
+    
+  }
+}
+
