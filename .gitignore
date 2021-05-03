@@ -1,2 +1,3 @@
 # exclude credentials for gcp project
 credentials/
+outputs/
