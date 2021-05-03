@@ -47,6 +47,9 @@ frontend main
     # jenkins
     use_backend backend_jenkins if { hdr_beg(host)   -i  jenkins.desafio }
 
+    # kubernetes dashboard
+    use_backend backend_dashboard_k8s if { hdr_beg(host)   -i  dash.k8s.desafio }
+
 backend backend_grafana
   balance leastconn
   server WS01 10.15.1.4:3000 check
@@ -58,4 +61,9 @@ backend backend_zabbix
 backend backend_jenkins
   balance leastconn
   server WS01 10.15.1.5:8080 check
+
+backend backend_dashboard_k8s
+  redirect scheme https if !{ ssl_fc }
+  balance leastconn
+  server WS01 10.15.1.8:31000 check ssl verify none
 
