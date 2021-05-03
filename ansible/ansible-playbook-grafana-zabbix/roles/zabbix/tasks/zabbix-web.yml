@@ -1,0 +1,20 @@
+---
+- name: Deploy Zabbix Frontend Container
+  docker_container:
+    image: zabbix/zabbix-web-nginx-pgsql:alpine-5.0.2
+    name: zabbix-web
+    restart_policy: always
+    state: started
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - 11080:8080
+    env:
+      PHP_TZ: America/Fortaleza
+      DB_SERVER_HOST: postgresql-zabbix
+      ZBX_SERVER_HOST: zabbix-server
+      POSTGRES_DB: zabbix
+      POSTGRES_USER: zabbix
+      POSTGRES_PASSWORD: zabbix
+    links:
+      - postgresql-zabbix

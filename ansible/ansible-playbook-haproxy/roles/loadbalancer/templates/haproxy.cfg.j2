@@ -36,7 +36,21 @@ frontend main
     # grafana
     use_backend backend_grafana if { hdr_beg(host)   -i  grafana.desafio }
 
+    # zabbix
+    use_backend backend_zabbix if { hdr_beg(host)   -i  zabbix.desafio }
+
+    # jenkins
+    use_backend backend_jenkins if { hdr_beg(host)   -i  jenkins.desafio }
+
 backend backend_grafana
-    balance leastconn
-    server WS01 10.15.1.4:3000 check
+  balance leastconn
+  server WS01 10.15.1.4:3000 check
+
+backend backend_zabbix
+  balance leastconn
+  server WS01 10.15.1.4:11080 check
+
+backend backend_jenkins
+  balance leastconn
+  server WS01 10.15.1.5:8080 check
 

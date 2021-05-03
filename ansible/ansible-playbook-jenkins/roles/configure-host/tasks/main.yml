@@ -1,0 +1,13 @@
+---
+- name: Instalar pacotes necessários
+  package:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - dnsutils
+    - net-tools
+    - htop
+    - telnet
+    - apt-transport-https
+    - wget

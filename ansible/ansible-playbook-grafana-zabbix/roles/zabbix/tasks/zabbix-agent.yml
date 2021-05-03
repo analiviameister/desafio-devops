@@ -1,0 +1,13 @@
+---
+- name: Deploy Zabbix Agent Container
+  docker_container:
+    image: zabbix/zabbix-agent:alpine-5.0.2
+    name: zabbix-agent
+    restart_policy: always
+    state: started
+    volumes:
+      - /opt/pgsql:/var/lib/postgresql/data
+      - /etc/localtime:/etc/localtime:ro
+    env:
+      ZBX_HOSTNAME: server
+      ZBX_SERVER_HOST: server

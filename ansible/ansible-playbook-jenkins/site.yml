@@ -1,7 +1,7 @@
 ---
 - name: Deploy Jenkins
-  hosts: master
-  remote_user: user
+  hosts: jenkins-master
+  remote_user: root
   tags: master
   roles:
     - role: jenkins
