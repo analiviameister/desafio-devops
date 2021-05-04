@@ -16,11 +16,6 @@
 - name: Install Jekins
   apt: update_cache=yes name=jenkins state=present
 
-- name: Enable service jenkins
-  ansible.builtin.service:
-    name: jenkins
-    enabled: yes
-
 - name: Restart Jenkins
   service: name=jenkins state=restarted
   become_user: root

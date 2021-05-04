@@ -1,0 +1,11 @@
+---
+
+- name:  Configure Ingress
+  template:
+    src: deployment.yml.j2
+    dest: /opt/deployments/haproxy-ingress.yaml
+    owner: root
+    group: root
+
+- name: Apply Deployment Ingress Controller
+  command: kubectl apply -f /opt/deployments/haproxy-ingress.yaml

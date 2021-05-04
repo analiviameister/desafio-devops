@@ -63,3 +63,14 @@ resource "google_compute_firewall" "allow-kubernetes-dashboard" {
   target_tags = ["k8s"]
 
 }
+
+resource "google_compute_firewall" "allow-https" {
+  name    = "${var.company_name}-fw-allow-https"
+  network = "${google_compute_network.vpc.name}"
+  
+  allow {
+    protocol = "tcp"
+    ports    = ["443"]
+  }
+  target_tags = ["https"] 
+}

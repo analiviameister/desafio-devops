@@ -33,3 +33,10 @@
   tags: dashboard
   roles:
     - role: kubernetes-dashboard
+
+- name: Configure Ingress Controller
+  hosts: node_master_01
+  remote_user: root
+  tags: ingress
+  roles:
+    - role: kubernetes-ingress

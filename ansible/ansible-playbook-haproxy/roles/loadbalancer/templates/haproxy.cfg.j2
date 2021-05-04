@@ -50,6 +50,9 @@ frontend main
     # kubernetes dashboard
     use_backend backend_dashboard_k8s if { hdr_beg(host)   -i  dash.k8s.desafio }
 
+    # app desafio nodejs
+    use_backend backend_app if { hdr_beg(host)   -i  app.desafio }
+
 backend backend_grafana
   balance leastconn
   server WS01 10.15.1.4:3000 check
@@ -67,3 +70,7 @@ backend backend_dashboard_k8s
   balance leastconn
   server WS01 10.15.1.8:31000 check ssl verify none
 
+backend backend_app
+  balance leastconn
+  server WS01 10.15.1.8:30594 check
+  server WS02 10.15.1.2:30594 check

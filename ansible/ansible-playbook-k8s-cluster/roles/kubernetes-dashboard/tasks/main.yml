@@ -7,13 +7,23 @@
     path: /opt/deployments
     state: directory
 
+- name: Copy template Dashboard svc
+  template:
+    src: svc-dashboard.yml.j2
+    dest: /opt/deployments/svc-dashboard.yml
+    owner: root
+    group: root
+
+- name: Deploy Dashboard svc
+  command: kubectl apply -f  /opt/deployments/svc-dashboard.yml
+
 - name: Copy template User Admin
   template:
     src: admin-dashboard.yml.j2
     dest: /opt/deployments/admin-dashboard.yml
     owner: root
     group: root
-
+    
 - name: Create User for Access Dashboard
   command: kubectl apply -f /opt/deployments/admin-dashboard.yml
 

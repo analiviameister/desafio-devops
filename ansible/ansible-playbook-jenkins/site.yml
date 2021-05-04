@@ -12,3 +12,10 @@
   tags: configure
   roles:
     - role: ansible-role-configure-hosts-docker
+
+- name: Install Packages
+  hosts: jenkins-master
+  remote_user: root
+  tags: packages
+  roles:
+    - role: configure-host

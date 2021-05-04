@@ -8,7 +8,7 @@ resource "google_compute_instance" "vm_instance_kubernetes-master-node-01" {
   name         = "kubernetes-master-node-01"
   machine_type = var.machine_types_kubernetes.master
   zone          = "${var.zone_name}"
-  tags = [ "ssh", "k8s" ]
+  tags = [ "ssh", "k8s", "https" ]
 
   boot_disk {
     initialize_params {

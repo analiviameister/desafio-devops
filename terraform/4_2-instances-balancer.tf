@@ -2,7 +2,7 @@ resource "google_compute_instance" "vm_instance_balancer-01" {
   name         = "balancer-haproxy-01"
   machine_type = var.machine_types.simple
   zone          = "${var.zone_name}"
-  tags = [ "ssh", "http" ]
+  tags = [ "ssh", "http", "https" ]
 
   boot_disk {
     initialize_params {
