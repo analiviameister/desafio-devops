@@ -10,7 +10,7 @@ Desafio feito a partir das seguintes orientações:
 - Monitoramento para os contêineres
 
 
-### Instruções
+## Instruções
 Para acessar os hosts configurados, execute o seguinte comando :
 
 ```console
@@ -49,7 +49,7 @@ Dashboard do Centralizador de Logs:
 - [kibana](http://kibana.desafio)
 
 
-### Tecnologias utilizadas
+## Tecnologias utilizadas
 
 Para automatização de tarefas e provisionamento, as seguintes ferramentas foram utilizadas:
 
