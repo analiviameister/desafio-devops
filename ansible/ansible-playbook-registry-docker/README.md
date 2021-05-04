@@ -1,18 +1,23 @@
 # Ansible Playbok Registry Docker
 
-### Requisitos:
+Playbook automatizar a implantação do Registry Docker como contêiner.
+### Instruções:
+
+
+<strong>Requirements</strong>
 
 ```console
 foo@bar:~$ make requirements
 ```
 
-### Comando para execução do playbook
+<strong>Executar Playbook</strong>
 
 ```console
-foo@bar:~$ ansible-playbook -i inventories/gcp.yml site.yml --tags configure,registry
+foo@bar:~$ ansible-playbook -i inventories/gcp.yml site.yml --tags configure,zabbix,registry
 ```
 
-### Roles:
+### Tags:
 
     - configure: Preparar Host com Docker Services
     - registry: Implantar contêiner do Registry Docker
+    - zabbix: Implantar agente do zabbix
