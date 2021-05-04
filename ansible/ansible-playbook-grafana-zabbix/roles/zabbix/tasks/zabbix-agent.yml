@@ -5,6 +5,8 @@
     name: zabbix-agent
     restart_policy: always
     state: started
+    ports: 
+      - 10050:10050
     volumes:
       - /opt/pgsql:/var/lib/postgresql/data
       - /etc/localtime:/etc/localtime:ro

@@ -21,3 +21,4 @@
       ZBX_STARTPINGERS: '500'
     links:
       - postgresql-zabbix
+      - zabbix-agent

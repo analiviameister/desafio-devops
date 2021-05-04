@@ -3,6 +3,6 @@
   include_tasks: "{{ item }}"
   with_items:
     - zabbix-pgsql.yml
-    - zabbix-server.yml 
     - zabbix-agent.yml
+    - zabbix-server.yml 
     - zabbix-web.yml
