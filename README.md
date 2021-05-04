@@ -20,29 +20,33 @@ foo@bar:~$ sudo bash scripts/insert-hosts.sh
 <strong>URL da Aplicação</strong>
 
 Url para exibir mensagem indicada nas orientações do desafio:
-[AppNodeJS](http://app.desafio)
+
+- [AppNodeJS](http://app.desafio)
 
 URL para exibir mensagem de healthcheck:
-[AppHealthCheck](http://app.desafio/actuator/health)
+  
+- [AppHealthCheck](http://app.desafio/actuator/health)
 
 
 <strong>URL dos Serviços:</strong>
 
 CI:
-[Jenkins](http://jenkins.desafio)
+
+- [Jenkins](http://jenkins.desafio)
 
 Monitoramento:
-[Grafana](http://grafana.desafio)
 
-[Zabbix](http://zabbix.desafio)
+- [Grafana](http://grafana.desafio)
+
+- [Zabbix](http://zabbix.desafio)
 
 Dashboard do Orquestrador de Contêineres
 
-[Kubernetes_Dashboard](http://dash.k8s.desafio)
+- [Kubernetes_Dashboard](http://dash.k8s.desafio)
 
 Dashboard do Centralizador de Logs:
 
-[kibana](http://kibana.desafio)
+- [kibana](http://kibana.desafio)
 
 
 ### Tecnologias utilizadas
