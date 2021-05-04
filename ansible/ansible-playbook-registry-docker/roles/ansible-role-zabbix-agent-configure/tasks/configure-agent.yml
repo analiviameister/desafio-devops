@@ -1,0 +1,17 @@
+---
+- name: Instalar pacote zabbix-agent2
+  package:
+    name: zabbix-agent2
+    state: present
+    update_cache: yes
+
+- name: Copiar arquivos de configuração
+  template:
+    src: zabbix_agent2.conf.j2
+    dest: /etc/zabbix/zabbix_agent2.conf
+
+- name: Startar serviço zabbix-agent2
+  service:
+    name: zabbix-agent2
+    state: restarted
+    enabled: yes

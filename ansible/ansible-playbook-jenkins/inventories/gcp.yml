@@ -2,6 +2,7 @@
 all:
   vars:
     ambiente: gcp
+    zabbix_server_ip_passive: 10.15.1.4
     vm_ip: "{{ lookup('file', '../../terraform/outputs/public_ip_vm_instance_cicd-01.txt') }}"
 
   hosts:

@@ -5,6 +5,13 @@
   roles:
     - role: ansible-role-configure-hosts-docker
 
+- name: Configurar Agent Zabbix
+  hosts: all
+  remote_user: root
+  tags: zabbix
+  roles:
+    - role: ansible-role-zabbix-agent-configure
+
 
 - name: Configurar Registry
   hosts: registry

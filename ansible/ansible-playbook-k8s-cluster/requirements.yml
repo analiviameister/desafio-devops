@@ -3,3 +3,10 @@
   scm: git
   accept_hostkey: yes
   version: origin/master
+
+
+- name: ansible-role-zabbix-agent-configure
+  src: https://github.com/analiviameister/ansible-role-zabbix-agent-configure.git
+  scm: git
+  accept_hostkey: yes
+  version: origin/master

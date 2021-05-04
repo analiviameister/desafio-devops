@@ -2,6 +2,7 @@
 all:
   vars:
     ambiente: gcp
+    zabbix_server_ip_passive: 10.15.1.4
     vm_ip_node_master_01: "{{ lookup('file', '../../terraform/outputs/public_ip_vm_instance_kubernetes-master-node-01.txt') }}"
     vm_ip_node_worker_01: "{{ lookup('file', '../../terraform/outputs/public_ip_vm_instance_kubernetes-worker-node-01.txt') }}"
     kube_version: 1.17.14

@@ -1,0 +1,26 @@
+---
+- name: Configurar Debian
+  include_tasks: configure-debian.yml
+  when: ansible_os_family == "Debian"
+
+- name: Configurar Ubuntu
+  include_tasks: configure-ubuntu.yml
+  when: ansible_os_family == "Ubuntu"
+
+- name: Criar grupos zabbix e docker
+  group:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - zabbix
+    - docker
+
+- name: Criar usuario do zabbix
+  user:
+    name: zabbix
+    comment: Zabbix Monitoring User
+    state: present
+    groups: [docker, zabbix]
+
+- name: Configurar agent 2
+  include_tasks: configure-agent.yml
